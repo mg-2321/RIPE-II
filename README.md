@@ -148,6 +148,6 @@ Typical runs expect:
 - a Python environment with the repo dependencies installed
 - Hugging Face model access for local embedding / generation models
 - OpenAI API access for judge models or external-guard experiments when used
-- large corpora and caches stored on `gscratch`
+
 
 
