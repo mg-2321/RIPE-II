@@ -13,6 +13,7 @@ JSONL-backed store with optional poisoning metadata.
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 import sqlite3
 import sys
@@ -76,6 +77,14 @@ class DocumentStore:
 
     @staticmethod
     def _index_db_for(path: Path) -> Path:
+        index_root = os.environ.get("GUARDRAG_DOCINDEX_DIR")
+        if index_root:
+            root = Path(index_root)
+            root.mkdir(parents=True, exist_ok=True)
+            resolved = str(path.resolve())
+            digest = hashlib.sha1(resolved.encode("utf-8")).hexdigest()[:16]
+            safe_name = f"{path.stem}.{digest}.docindex.sqlite"
+            return root / safe_name
         return path.with_suffix(path.suffix + ".docindex.sqlite")
 
     @classmethod
@@ -103,7 +112,8 @@ class DocumentStore:
         if not rebuild:
             return index_db
 
-        tmp_db = index_db.with_suffix(index_db.suffix + ".tmp")
+        index_db.parent.mkdir(parents=True, exist_ok=True)
+        tmp_db = index_db.with_suffix(index_db.suffix + f".{os.getpid()}.tmp")
         if tmp_db.exists():
             tmp_db.unlink()
         conn = sqlite3.connect(str(tmp_db))
