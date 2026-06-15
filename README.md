@@ -127,20 +127,6 @@ Implemented retrievers:
 
 Optional reranking is supported through the pipeline and component-study path.
 
-## Guards
-
-The repo also contains lightweight guard ablations in [guards/__init__.py](/mmfs1/home/gayat23/projects/guardrag-thesis/guards/__init__.py). These are useful for defense-side experiments, but the main RIPE-II benchmark is defined on the **raw / no-guard** pipeline unless noted otherwise.
-
-## What Stays Out Of Git
-
-Large runtime artifacts stay on `gscratch` and are not meant for GitHub:
-
-- `data/`
-- raw `live_judge` JSONL outputs
-- logs
-- retriever caches
-- large pilot corpora such as MS MARCO merged artifacts
-
 ## Environment Notes
 
 Typical runs expect:
