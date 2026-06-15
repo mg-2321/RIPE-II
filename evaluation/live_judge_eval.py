@@ -251,23 +251,23 @@ CORPUS_CONFIGS = {
                                 / 'nq_main_attack.jsonl',
         },
         'whitebox': {
-            'merged':   _IPI    / 'ipi_nq_whitebox_main'
+            'merged':   _GSRATCH_IPI / 'ipi_nq_whitebox_main'
                                 / 'nq_realistic_attack_merged.jsonl',
             'clean':    _BEIR   / 'nq' / 'corpus.jsonl',
             'queries':  _BEIR   / 'nq' / 'queries.jsonl',
-            'metadata': _IPI    / 'ipi_nq_whitebox_main'
+            'metadata': _GSRATCH_IPI / 'ipi_nq_whitebox_main'
                                 / 'nq_realistic_attack_metadata_v2.jsonl',
-            'poisoned': _IPI    / 'ipi_nq_whitebox_main'
+            'poisoned': _GSRATCH_IPI / 'ipi_nq_whitebox_main'
                                 / 'nq_realistic_attack.jsonl',
         },
         'graybox': {
-            'merged':   _IPI    / 'ipi_nq_graybox_main'
+            'merged':   _GSRATCH_IPI / 'ipi_nq_graybox_main'
                                 / 'nq_realistic_attack_merged.jsonl',
             'clean':    _BEIR   / 'nq' / 'corpus.jsonl',
             'queries':  _BEIR   / 'nq' / 'queries.jsonl',
-            'metadata': _IPI    / 'ipi_nq_graybox_main'
+            'metadata': _GSRATCH_IPI / 'ipi_nq_graybox_main'
                                 / 'nq_realistic_attack_metadata_v2.jsonl',
-            'poisoned': _IPI    / 'ipi_nq_graybox_main'
+            'poisoned': _GSRATCH_IPI / 'ipi_nq_graybox_main'
                                 / 'nq_realistic_attack.jsonl',
         },
         'realistic': {
@@ -322,6 +322,26 @@ CORPUS_CONFIGS = {
             'poisoned': _GSRATCH_IPI / 'ipi_hotpotqa_engineered'
                                      / 'hotpotqa_engineered_attack.jsonl',
         },
+        'whitebox': {
+            'merged':   _GSRATCH_IPI / 'ipi_hotpotqa_whitebox_main'
+                                     / 'hotpotqa_realistic_attack_merged.jsonl',
+            'clean':    _BEIR   / 'hotpotqa' / 'corpus.jsonl',
+            'queries':  _BEIR   / 'hotpotqa' / 'queries.jsonl',
+            'metadata': _GSRATCH_IPI / 'ipi_hotpotqa_whitebox_main'
+                                     / 'hotpotqa_realistic_attack_metadata_v2.jsonl',
+            'poisoned': _GSRATCH_IPI / 'ipi_hotpotqa_whitebox_main'
+                                     / 'hotpotqa_realistic_attack.jsonl',
+        },
+        'graybox': {
+            'merged':   _GSRATCH_IPI / 'ipi_hotpotqa_graybox_main'
+                                     / 'hotpotqa_realistic_attack_merged.jsonl',
+            'clean':    _BEIR   / 'hotpotqa' / 'corpus.jsonl',
+            'queries':  _BEIR   / 'hotpotqa' / 'queries.jsonl',
+            'metadata': _GSRATCH_IPI / 'ipi_hotpotqa_graybox_main'
+                                     / 'hotpotqa_realistic_attack_metadata_v2.jsonl',
+            'poisoned': _GSRATCH_IPI / 'ipi_hotpotqa_graybox_main'
+                                     / 'hotpotqa_realistic_attack.jsonl',
+        },
     },
     'msmarco': {
         'main_candidate': {
@@ -333,6 +353,26 @@ CORPUS_CONFIGS = {
                                      / 'msmarco_main_attack_metadata_v2.jsonl',
             'poisoned': _ROOT   / 'IPI_generators' / 'ipi_msmarco_main'
                                      / 'msmarco_main_attack.jsonl',
+        },
+        'whitebox': {
+            'merged':   _GSRATCH_IPI / 'ipi_msmarco_whitebox_main'
+                                     / 'msmarco_realistic_attack_merged.jsonl',
+            'clean':    _BEIR   / 'msmarco' / 'corpus.jsonl',
+            'queries':  _BEIR   / 'msmarco' / 'queries.jsonl',
+            'metadata': _GSRATCH_IPI / 'ipi_msmarco_whitebox_main'
+                                     / 'msmarco_realistic_attack_metadata_v2.jsonl',
+            'poisoned': _GSRATCH_IPI / 'ipi_msmarco_whitebox_main'
+                                     / 'msmarco_realistic_attack.jsonl',
+        },
+        'graybox': {
+            'merged':   _GSRATCH_IPI / 'ipi_msmarco_graybox_main'
+                                     / 'msmarco_realistic_attack_merged.jsonl',
+            'clean':    _BEIR   / 'msmarco' / 'corpus.jsonl',
+            'queries':  _BEIR   / 'msmarco' / 'queries.jsonl',
+            'metadata': _GSRATCH_IPI / 'ipi_msmarco_graybox_main'
+                                     / 'msmarco_realistic_attack_metadata_v2.jsonl',
+            'poisoned': _GSRATCH_IPI / 'ipi_msmarco_graybox_main'
+                                     / 'msmarco_realistic_attack.jsonl',
         },
     },
 }
