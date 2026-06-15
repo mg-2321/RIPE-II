@@ -10,6 +10,7 @@ from typing import List
 from pathlib import Path
 import hashlib
 import os
+import shutil
 import time
 
 from .base import BaseRetriever, RetrieverResult
@@ -55,6 +56,7 @@ class DenseRetriever(BaseRetriever):
         lock_path: Path,
         poll_s: float = 5.0,
         timeout_s: float = 4 * 3600.0,
+        stale_after_s: float = 30 * 60.0,
     ):
         start = time.time()
         announced = False
@@ -63,6 +65,19 @@ class DenseRetriever(BaseRetriever):
                 print(f"Loading cached vector index from {index_dir}")
                 return PersistentVectorIndex.load(index_dir)
             if not lock_path.exists():
+                return None
+            lock_age_s = time.time() - lock_path.stat().st_mtime
+            if lock_age_s > stale_after_s:
+                print(
+                    "Removing stale dense-index lock after "
+                    f"{int(lock_age_s)}s: {lock_path}"
+                )
+                try:
+                    lock_path.unlink()
+                except FileNotFoundError:
+                    pass
+                if index_dir.exists() and not PersistentVectorIndex.exists(index_dir):
+                    shutil.rmtree(index_dir, ignore_errors=True)
                 return None
             if time.time() - start > timeout_s:
                 raise TimeoutError(f"Timed out waiting for vector index build: {index_dir}")

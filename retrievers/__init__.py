@@ -1,26 +1,35 @@
-from .base import BaseRetriever  # noqa: F401
-from .dense import DenseRetriever  # noqa: F401
-from .hybrid import HybridRetriever  # noqa: F401
-from .splade import SPLADERetriever  # noqa: F401
+"""
+Retriever package registry.
 
-RETRIEVER_REGISTRY = {
-    DenseRetriever.name: DenseRetriever,
-    HybridRetriever.name: HybridRetriever,
-    SPLADERetriever.name: SPLADERetriever,
+Author: Gayatri Malladi
+"""
+
+from __future__ import annotations
+
+from importlib import import_module
+
+from .base import BaseRetriever  # noqa: F401
+
+
+_RETRIEVER_SPECS = {
+    "dense": ("retrievers.dense", "DenseRetriever"),
+    "hybrid": ("retrievers.hybrid", "HybridRetriever"),
+    "splade": ("retrievers.splade", "SPLADERetriever"),
+    "bm25": ("retrievers.bm25", "BM25Retriever"),
 }
 
-# Optional BM25 support (rank-bm25 may not be installed in all environments)
-try:
-    from .bm25 import BM25Retriever  # noqa: F401
-except Exception:
-    BM25Retriever = None  # type: ignore[assignment]
-else:
-    RETRIEVER_REGISTRY[BM25Retriever.name] = BM25Retriever
+
+def list_retrievers():
+    return list(_RETRIEVER_SPECS.keys())
 
 
 def get_retriever(name: str):
     try:
-        return RETRIEVER_REGISTRY[name]
+        module_name, class_name = _RETRIEVER_SPECS[name]
     except KeyError as exc:
-        raise ValueError(f"Unknown retriever {name}. Available: {list(RETRIEVER_REGISTRY)}") from exc
+        raise ValueError(
+            f"Unknown retriever {name}. Available: {list_retrievers()}"
+        ) from exc
 
+    module = import_module(module_name)
+    return getattr(module, class_name)

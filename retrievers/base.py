@@ -1,5 +1,5 @@
 """
-Base retriever interfaces used by RIPE-II.
+Base retriever interfaces used by GuardRAG.
 
 Author: Gayatri Malladi
 
