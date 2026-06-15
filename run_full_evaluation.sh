@@ -16,6 +16,10 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=48G
 #SBATCH --account=uwb
+#SBATCH --partition=gpu-l40s
+#SBATCH --qos=ckpt-gpu
+#SBATCH --gres=gpu:1
+#SBATCH --no-requeue
 
 set -euo pipefail
 
@@ -143,4 +147,3 @@ done
 
 echo
 echo "Done: $(date)"
-
