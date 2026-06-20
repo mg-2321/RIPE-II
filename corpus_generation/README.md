@@ -29,6 +29,11 @@ be released as separate artifacts.
 - `build_security_strong_corpus.py` creates security-strong variants focused on
   instruction hierarchy override, task redirection, citation hijacking, report
   manipulation, obfuscation, and exfiltration-style objectives.
+- `build_visual_ocr_blackbox_corpus.py` creates high-quality visual blackbox
+  corpora with real rendered image assets, manifests, and audit files. It
+  supports two separated modes: `ocr`, where OCR-extracted image text is
+  inserted into the retrieved document, and `preview`, where the attack remains
+  image-only for browser/link-preview or multimodal-agent evaluation.
 
 ## Quality Control and Shared Utilities
 
@@ -49,3 +54,38 @@ Do not commit generated corpora from `IPI_generators/`, `data/`, `results/`,
 `_backups/`, or `_candidate_*_audit/`. Keep final datasets in the research
 artifact directory and publish them separately from the source-code repository
 when appropriate.
+
+## Rebuilding Visual Blackbox Corpora
+
+The DSN-count visual artifact set can be regenerated with:
+
+```bash
+python corpus_generation/build_visual_ocr_blackbox_corpus.py \
+  --output-root /gscratch/uwb/gayat23/GuardRAG/IPI_generators \
+  --profile dsn \
+  --mode both \
+  --selection-mode quality \
+  --variant-suffix dsn_quality_v1 \
+  --corpora nq hotpotqa msmarco fiqa nfcorpus scifact
+```
+
+This produces two separated artifact families per dataset:
+
+- `*_visual_ocr_blackbox_merged.jsonl`
+- `*_visual_ocr_blackbox_metadata.jsonl`
+- `*_visual_ocr_blackbox_manifest.json`
+- `*_visual_ocr_blackbox_audit.json`
+- `assets/*.png`
+- `*_image_preview_blackbox_episodes.jsonl`
+- `*_image_preview_blackbox_metadata.jsonl`
+- `*_image_preview_blackbox_manifest.json`
+- `*_image_preview_blackbox_audit.json`
+- `previews/*.html`
+
+The builder uses seeded random document selection with no qrels or retriever
+access, preserving the blackbox attacker setting. The default
+`--selection-mode quality` still remains blackbox, but filters for readable,
+content-rich, non-duplicate source documents and records source-quality metadata
+in manifests and metadata rows. In `preview` mode, the attack payload is not
+inserted into the text layer; it is only rendered inside the image asset and
+stored in metadata for evaluation labels.
