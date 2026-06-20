@@ -29,4 +29,11 @@ class Document:
     def is_poisoned(self) -> bool:
         # New format: poisoned docs have _id starting with "IPI_"
         # Old format: had _poisoned in metadata
-        return self.doc_id.startswith("IPI_") or bool(self.metadata.get("_poisoned", False))
+        # Visual/OCR and newer curated corpora use is_poisoned / attack_family.
+        return bool(
+            self.doc_id.startswith("IPI_")
+            or self.metadata.get("_poisoned", False)
+            or self.metadata.get("is_poisoned", False)
+            or self.metadata.get("attack_family")
+            or self.metadata.get("security_family")
+        )
